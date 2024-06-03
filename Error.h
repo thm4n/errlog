@@ -2,33 +2,52 @@
 #define _ERROR_H_
 
 #include "TermManip.h"
-#include <stdio.h>
-#include "errno.h"
 
-#define BUFF_LEN 256
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include <stdarg.h>
+#include <errno.h>
+
+#define MAX_BUFF_LEN 256
+#define MIN_BUFF_LEN 16
 
 #define wlog(mtype, format, ...) \
 		(_logger_write(__FILE__, __FUNCTION__, __LINE__, mtype, format __VA_OPT__(,) __VA_ARGS__))
 #define exitWithError(errcode, format, ...) \
 		(_exitWithError(__FILE__, __FUNCTION__, __LINE__, errcode, format __VA_OPT__(,) __VA_ARGS__))
 
-typedef enum {
+#define nonlog(format, ...) \
+		(_logger_write(__FILE__, __FUNCTION__, __LINE__, msg_t_none, format __VA_OPT__(,) __VA_ARGS__))
+#define errlog(format, ...) \
+		(_logger_write(__FILE__, __FUNCTION__, __LINE__, msg_t_error, format __VA_OPT__(,) __VA_ARGS__))
+#define wrnlog(format, ...) \
+		(_logger_write(__FILE__, __FUNCTION__, __LINE__, msg_t_warning, format __VA_OPT__(,) __VA_ARGS__))
+#define inflog(format, ...) \
+		(_logger_write(__FILE__, __FUNCTION__, __LINE__, msg_t_info, format __VA_OPT__(,) __VA_ARGS__))
+#define dbglog(format, ...) \
+		(_logger_write(__FILE__, __FUNCTION__, __LINE__, msg_t_debug, format __VA_OPT__(,) __VA_ARGS__))
+#define fatlog(format, ...) \
+		(_logger_write(__FILE__, __FUNCTION__, __LINE__, msg_t_fatal, format __VA_OPT__(,) __VA_ARGS__))
+
+typedef enum msg_t {
 	msg_t_none    = 0,
 	msg_t_error   = 1,
 	msg_t_warning = 2,
-	msg_t_message = 3,
+	msg_t_info    = 3,
 	msg_t_debug   = 4,
 	msg_t_fatal   = 5,
 } msg_t;
 
-typedef enum {
+typedef enum error_code_t {
 	_errcode_clean     = 0,
 	_errcode_unknown   = 1,
 	_errcode_log_error = 2,
 	_errcode_usage     = 3,
 	_errcode_IO        = 4,
-	_errocde_external  = 5,
-	_errcode_mem_err   = 6
+	_errcode_external  = 5,
+	_errcode_mem_err   = 6,
 } error_code_t;
 
 #define ERRCODE_CLEAN_MSG  ""

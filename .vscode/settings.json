@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"termmanip.h": "c",
+		"stdarg.h": "c",
+		"errno.h": "c",
+		"string.h": "c"
+	}
+}

@@ -1,11 +1,19 @@
 #ifndef _DEFS_H_
 #define _DEFS_H_
 
-#define HIDE_CURSOR  (printf("\x1b[?25l"))
-#define SHOW_CURSOR  (printf("\x1b[?25h"))
+#define DEBUG true
 
-#define RETURN_HOME  (printf("\033[0;0H"))
-#define ColorReset   (printf("\033[0m"))
+#define DO_HIDE_CURSOR  (printf("\x1b[?25l"))
+#define DO_SHOW_CURSOR  (printf("\x1b[?25h"))
+
+#define DO_RETURN_HOME  (printf("\033[0;0H"))
+#define DO_COLOR_RESET  (printf("\033[0m"))
+
+#define HIDE_CURSOR  ("\x1b[?25l")
+#define SHOW_CURSOR  ("\x1b[?25h")
+
+#define RETURN_HOME  ("\033[0;0H")
+#define COLOR_RESET  ("\033[0m")
 
 #define Black  30
 #define Red    31
@@ -27,10 +35,10 @@
 #define _ATTR_REVERSE    7
 #define _ATTR_HIDDEN     8
 
-const char* _setColor(int ground, int attrib, int color);
+const char* _setColor(char* buff, int ground, int attrib, int color);
 
-#define setColor(color) (_setColor(FG, _ATTR_REG, color))
-#define setLightColor(color) (_setColor(FG, _ATTR_LIGHT, color))
+#define setColor(buff, color) (_setColor(buff, FG, _ATTR_REG, color))
+#define setLightColor(buff, color) (_setColor(buff, FG, _ATTR_LIGHT, color))
 
 #define dropline(index)    (index + DEF_TERM_WIDTH)
 #define lineReturn(index)  (index % DEF_TERM_WIDTH)
